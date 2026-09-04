@@ -15,7 +15,42 @@ from kivymd.uix.list import TwoLineAvatarIconListItem, IconLeftWidget, IconRight
 from kivymd.uix.button import MDRaisedButton, MDIconButton
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.boxlayout import MDBoxLayout
- 
+from kivy.utils import platform
+
+def request_ecosystem_permissions():
+    """
+    Requests all custom signature-level ecosystem permissions 
+    and standard launcher capabilities at runtime.
+    """
+    if platform == 'android':
+        try:
+            from android.permissions import request_permissions, Permission
+            
+            ecosystem_permissions = [
+                'core.luninuous.engine.sync',
+                'ai.launcher.theam.read',
+                'ai.launcher.theam.write',
+                'ai.launcher.backup.read',
+                'ai.launcher.backup.write',
+                'ai.launcher.background_services_allowed',
+                'android.permission.RECEIVE_BOOT_COMPLETED',
+                'android.permission.QUERY_ALL_PACKAGES',
+                'android.permission.PACKAGE_USAGE_STATS',
+                'android.permission.READ_EXTERNAL_STORAGE',
+                'android.permission.WRITE_EXTERNAL_STORAGE',
+                'android.permission.WAKE_LOCK'
+            ]
+            
+            def callback(permissions, grant_results):
+                granted_count = sum(1 for r in grant_results if r)
+                print(f"[Ecosystem Security] Granted {granted_count}/{len(permissions)} permissions.")
+
+            request_permissions(ecosystem_permissions, callback)
+            
+        except Exception as e:
+            print(f"[Security Warning] Failed to invoke runtime permissions: {e}")
+    else:
+        print("[Desktop Simulator] Skipping Android runtime permissions.")
 class AggressiveContextualNN:
     """
     On-Device 2-Layer Neural Network with Online Backpropagation.

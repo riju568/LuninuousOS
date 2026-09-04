@@ -1,11 +1,12 @@
-#### 1. Run on Desktop (Testing Mode)
+# ⚡ Luninuous AI Launcher 
 
-python launcher\_01.01.py
+Maintain the following file layout for a successful build:
 
-#### 2. Compile to Android APK (buildozer.spec)
-
-If compiling using **Buildozer**, use the following configuration in your buildozer.spec:
-
-To compile and launch directly on an attached Android phone:
-
-buildozer android debug deploy run
+```text
+├── main.py
+├── buildozer.spec        
+├── AndroidManifest.xml   
+├── README.md    
+└── .github/
+    └── workflows/
+        └── build.yml #APK compilation
